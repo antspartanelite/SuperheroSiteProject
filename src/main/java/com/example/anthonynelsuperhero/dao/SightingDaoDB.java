@@ -75,9 +75,9 @@ public class SightingDaoDB implements SightingDao{
 
     @Override
     public List<Sighting> getSightingsOnDate(String date) {
-        final String SELECT_ALL_LOCATIONS = "SELECT * FROM HeroSighting " +
+        final String SELECT_ALL_SIGHTINGS = "SELECT * FROM HeroSighting " +
                 "WHERE Time = ?";
-        List<Sighting> sightings = jdbc.query(SELECT_ALL_LOCATIONS, new SightingMapper(), date);
+        List<Sighting> sightings = jdbc.query(SELECT_ALL_SIGHTINGS, new SightingMapper(), date);
         return sightings;
     }
 
