@@ -20,34 +20,32 @@ public class SightingDaoDB implements SightingDao{
 
     @Override
     public void addSighting(Sighting sighting) {
-        final String INSERT_SIGHTING= "INSERT INTO HeroSighting(Latitude, Longitude, HeroID, Time) "
+        final String INSERT_SIGHTING= "INSERT INTO HeroSighting(Latitude, Longitude, HeroID, SightingDate) "
                 + "VALUES(?,?,?,?)";
         jdbc.update(INSERT_SIGHTING,
                 sighting.getLatitude(),
                 sighting.getLongitude(),
                 sighting.getHeroId(),
-                sighting.getTime());
+                sighting.getDate());
     }
 
     @Override
     public void deleteSighting(Sighting sighting) {
-        final String DELETE_HEROSIGHTING = "DELETE FROM HeroSighting WHERE Latitude = ? AND Longitude = ? AND HeroID = ? AND Time = ?";
+        final String DELETE_HEROSIGHTING = "DELETE FROM HeroSighting WHERE SightingID = ?";
         jdbc.update(DELETE_HEROSIGHTING,
-                sighting.getLatitude(),
-                sighting.getLongitude(),
-                sighting.getHeroId(),
-                sighting.getTime());
+                sighting.getSightingId());
     }
 
     @Override
     public void updateSighting(Sighting sighting) {
-        final String UPDATE_HEROSIGHTING= "UPDATE HeroSighting SET Latitude = ?, Longitude = ?, HeroID = ?, Time = ? "
-                + "WHERE Latitude = ? AND Longitude = ? AND HeroID = ? AND Time = ?";
+        final String UPDATE_HEROSIGHTING= "UPDATE HeroSighting SET Latitude = ?, Longitude = ?, HeroID = ?, SightingDate = ? "
+                + "WHERE SightingID = ?";
         jdbc.update(UPDATE_HEROSIGHTING,
                 sighting.getLatitude(),
                 sighting.getLongitude(),
                 sighting.getHeroId(),
-                sighting.getTime());
+                sighting.getDate(),
+                sighting.getSightingId());
     }
 
     @Override
@@ -61,14 +59,14 @@ public class SightingDaoDB implements SightingDao{
     public List<Hero> getHeroesByLocationSighted(float latitude, float longitude) {
         final String SELECT_ALL_HEROES = "SELECT * FROM HeroSighting " +
                 "INNER JOIN Hero ON Hero.HeroID = HeroSighting.HeroID WHERE Latitude = ? AND Longitude = ?";
-        List<Hero> heroes = jdbc.query(SELECT_ALL_HEROES, new HeroHeroDaoDB.HeroMapper(), latitude, longitude);
+        List<Hero> heroes = jdbc.query(SELECT_ALL_HEROES, new HeroDaoDB.HeroMapper(), (double)latitude, (double)longitude);
         return heroes;
     }
 
     @Override
     public List<Location> getLocationsHeroHasBeenSighted(int heroId) {
         final String SELECT_ALL_LOCATIONS = "SELECT * FROM HeroSighting " +
-                "INNER JOIN Location ON Hero.HeroID = HeroSighting.HeroID WHERE Latitude = ? AND Longitude = ?";
+                "INNER JOIN Location ON Location.Latitude = HeroSighting.Latitude AND Location.Longitude = HeroSighting.Longitude WHERE HeroID = ?";
         List<Location> locations = jdbc.query(SELECT_ALL_LOCATIONS, new LocationDaoDB.LocationMapper(), heroId);
         return locations;
     }
@@ -76,7 +74,7 @@ public class SightingDaoDB implements SightingDao{
     @Override
     public List<Sighting> getSightingsOnDate(String date) {
         final String SELECT_ALL_SIGHTINGS = "SELECT * FROM HeroSighting " +
-                "WHERE Time = ?";
+                "WHERE SightingDate = ?";
         List<Sighting> sightings = jdbc.query(SELECT_ALL_SIGHTINGS, new SightingMapper(), date);
         return sightings;
     }
@@ -85,10 +83,11 @@ public class SightingDaoDB implements SightingDao{
         @Override
         public Sighting mapRow(ResultSet rs, int index) throws SQLException {
             Sighting sighting = new Sighting();
+            sighting.setSightingId(rs.getInt("SightingID"));
             sighting.setHeroId(rs.getInt("HeroID"));
             sighting.setLatitude(rs.getFloat("Latitude"));
             sighting.setLongitude(rs.getFloat("Longitude"));
-            sighting.setTime(rs.getString("Time"));
+            sighting.setDate(rs.getString("SightingDate"));
             return sighting;
         }
     }

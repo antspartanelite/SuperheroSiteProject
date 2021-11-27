@@ -1,9 +1,19 @@
 package com.example.anthonynelsuperhero.dto;
 
 public class Sighting {
+    int sightingId;
     float latitude;
     float longitude;
     int heroId;
+    String date;
+
+    public int getSightingId() {
+        return sightingId;
+    }
+
+    public void setSightingId(int sightingId) {
+        this.sightingId = sightingId;
+    }
 
     public float getLatitude() {
         return latitude;
@@ -29,15 +39,13 @@ public class Sighting {
         this.heroId = heroId;
     }
 
-    public String getTime() {
-        return time;
+    public String getDate() {
+        return date;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setDate(String date) {
+        this.date = date;
     }
-
-    String time;
 
 
 }

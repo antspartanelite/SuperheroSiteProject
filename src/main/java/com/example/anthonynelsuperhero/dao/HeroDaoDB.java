@@ -9,17 +9,22 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
-public class HeroHeroDaoDB implements HeroDao {
+public class HeroDaoDB implements HeroDao {
 
     @Autowired
     JdbcTemplate jdbc;
+
+    @Autowired
+    SuperpowerDao superpowerDao;
 
     @Override
     public void addHero(Hero hero) {
         final String INSERT_HERO = "INSERT INTO Hero(Name, Description, Superpower) "
                 + "VALUES(?,?,?)";
+        handleNewSuperpower(hero.getSuperpower());
         jdbc.update(INSERT_HERO,
                 hero.getName(),
                 hero.getDescription(),
@@ -35,7 +40,8 @@ public class HeroHeroDaoDB implements HeroDao {
     @Override
     public void updateHero(Hero hero) {
         final String UPDATE_HERO = "UPDATE Hero SET Name = ?, Description = ?, "
-                + "Superpower = ? WHERE id = ?";
+                + "Superpower = ? WHERE HeroID = ?";
+        handleNewSuperpower(hero.getSuperpower());
         jdbc.update(UPDATE_HERO,
                 hero.getName(),
                 hero.getDescription(),
@@ -51,6 +57,13 @@ public class HeroHeroDaoDB implements HeroDao {
     }
 
     @Override
+    public void addHeroToOrganisation(int heroId, int organisationId){
+        final String INSERT_HERO = "INSERT INTO OrganisationHero(HeroID, OrganisationID) "
+                + "VALUES(?,?)";
+        jdbc.update(INSERT_HERO, heroId, organisationId);
+    }
+
+    @Override
     public List<Organisation> getOrganisationsOfHero(int heroId) {
         final String SELECT_ALL_ORGANISATIONS = "SELECT * FROM OrganisationHero " +
                 "INNER JOIN Organisation ON Organisation.OrganisationID = OrganisationHero.OrganisationID WHERE HeroID = ?";
@@ -58,6 +71,18 @@ public class HeroHeroDaoDB implements HeroDao {
         return organisations;
     }
 
+    //Handles the event where a user decides to create a hero with a power that doesn't exist yet
+    private void handleNewSuperpower(String powerName){
+        List<Superpower> superpowers = superpowerDao.getSuperpowers();
+        for (Superpower superpower:superpowers){
+            if(Objects.equals(superpower.getName(), powerName)){
+                return;
+            }
+        }
+        Superpower power = new Superpower();
+        power.setName(powerName);
+        superpowerDao.addSuperpower(power);
+    }
 
     public static final class HeroMapper implements RowMapper<Hero> {
 

@@ -9,6 +9,7 @@ public interface HeroDao {
     public void deleteHeroById(int id);
     public void updateHero(Hero hero);
     public List<Hero> getHeroes();
+    public void addHeroToOrganisation(int heroId, int organisationId);
     public List<Organisation> getOrganisationsOfHero(int heroId);
 
 }

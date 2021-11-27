@@ -1,7 +1,6 @@
 package com.example.anthonynelsuperhero.dao;
 
 import com.example.anthonynelsuperhero.dto.Hero;
-import com.example.anthonynelsuperhero.dto.Location;
 import com.example.anthonynelsuperhero.dto.Organisation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -20,7 +19,7 @@ public class OrganisationDaoDB implements OrganisationDao{
 
     @Override
     public void addOrganisation(Organisation organisation) {
-        final String INSERT_ORGANISATION = "INSERT INTO Hero(OrganisationID, Name, Description, Postcode) "
+        final String INSERT_ORGANISATION = "INSERT INTO Organisation(OrganisationID, Name, Description, Postcode) "
                 + "VALUES(?,?,?,?)";
         jdbc.update(INSERT_ORGANISATION,
                 organisation.getId(),
@@ -58,7 +57,7 @@ public class OrganisationDaoDB implements OrganisationDao{
     public List<Hero> getHeroesOfOrganisation(int organisationId) {
         final String SELECT_ALL_HEROES = "SELECT * FROM OrganisationHero " +
                 "INNER JOIN Hero ON Hero.HeroID = OrganisationHero.HeroID WHERE OrganisationID = ?";
-        List<Hero> heroes = jdbc.query(SELECT_ALL_HEROES, new HeroHeroDaoDB.HeroMapper(), organisationId);
+        List<Hero> heroes = jdbc.query(SELECT_ALL_HEROES, new HeroDaoDB.HeroMapper(), organisationId);
         return heroes;
     }
 

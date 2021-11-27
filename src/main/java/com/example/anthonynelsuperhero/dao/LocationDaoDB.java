@@ -1,6 +1,5 @@
 package com.example.anthonynelsuperhero.dao;
 
-import com.example.anthonynelsuperhero.dto.Hero;
 import com.example.anthonynelsuperhero.dto.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,7 +18,7 @@ public class LocationDaoDB implements LocationDao{
 
     @Override
     public void addLocation(Location location) {
-        final String INSERT_LOCATION = "INSERT INTO Hero(Name, Description, Postcode, Latitude, Longitude) "
+        final String INSERT_LOCATION = "INSERT INTO Location(Name, Description, Postcode, Latitude, Longitude) "
                 + "VALUES(?,?,?,?,?)";
         jdbc.update(INSERT_LOCATION,
                 location.getName(),
@@ -31,19 +30,18 @@ public class LocationDaoDB implements LocationDao{
 
     @Override
     public void deleteLocation(float latitude, float longitude) {
-        final String DELETE_HERO = "DELETE FROM Location WHERE Latitude = ? AND Longitude = ?";
-        jdbc.update(DELETE_HERO, latitude, longitude);
+        final String DELETE_HERO = "DELETE FROM Location WHERE Latitude = "+(double)latitude+" AND Longitude = "+(double)longitude;
+        //Cast to double as it had trouble removing floats for some reason, will refactor if time allows
+        jdbc.update(DELETE_HERO);
     }
 
     @Override
     public void updateLocation(Location location) {
         final String UPDATE_LOCATION = "UPDATE Location SET Name = ?, Description = ? "
-                + "WHERE Latitude = ? AND Longitude = ?";
+                + "WHERE Latitude = "+(double)location.getLatitude()+" AND Longitude = "+(double)location.getLongitude();
         jdbc.update(UPDATE_LOCATION,
                 location.getName(),
-                location.getDescription(),
-                location.getLongitude(),
-                location.getLatitude());
+                location.getDescription());
     }
 
     @Override
