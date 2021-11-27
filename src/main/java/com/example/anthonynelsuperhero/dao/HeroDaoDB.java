@@ -20,10 +20,12 @@ public class HeroDaoDB implements HeroDao {
     @Autowired
     SuperpowerDao superpowerDao;
 
+    //Inserts a new hero into the database
     @Override
     public void addHero(Hero hero) {
         final String INSERT_HERO = "INSERT INTO Hero(Name, Description, Superpower) "
                 + "VALUES(?,?,?)";
+        //If a superpower is stated and does not exits in the superpower table a new one will be created
         handleNewSuperpower(hero.getSuperpower());
         jdbc.update(INSERT_HERO,
                 hero.getName(),
@@ -31,16 +33,19 @@ public class HeroDaoDB implements HeroDao {
                 hero.getSuperpower());
     }
 
+    //Deletes a hero from the hero table by its id
     @Override
     public void deleteHeroById(int id) {
         final String DELETE_HERO = "DELETE FROM Hero WHERE HeroID = ?";
         jdbc.update(DELETE_HERO, id);
     }
 
+    //Updates a hero in the hero table
     @Override
     public void updateHero(Hero hero) {
         final String UPDATE_HERO = "UPDATE Hero SET Name = ?, Description = ?, "
                 + "Superpower = ? WHERE HeroID = ?";
+        //If the superpower is updated to one that does not exist in the superpower table a new one will be created
         handleNewSuperpower(hero.getSuperpower());
         jdbc.update(UPDATE_HERO,
                 hero.getName(),
@@ -49,6 +54,7 @@ public class HeroDaoDB implements HeroDao {
                 hero.getId());
     }
 
+    //Gets all heroes in the hero table and returns as a list
     @Override
     public List<Hero> getHeroes() {
         final String SELECT_ALL_HEROES = "SELECT * FROM Hero";
@@ -56,6 +62,7 @@ public class HeroDaoDB implements HeroDao {
         return heroes;
     }
 
+    //Adds a hero and an organisation into the heroorganisation table
     @Override
     public void addHeroToOrganisation(int heroId, int organisationId){
         final String INSERT_HERO = "INSERT INTO OrganisationHero(HeroID, OrganisationID) "
@@ -63,6 +70,7 @@ public class HeroDaoDB implements HeroDao {
         jdbc.update(INSERT_HERO, heroId, organisationId);
     }
 
+    //Gets the organisations that a hero is in
     @Override
     public List<Organisation> getOrganisationsOfHero(int heroId) {
         final String SELECT_ALL_ORGANISATIONS = "SELECT * FROM OrganisationHero " +
@@ -84,6 +92,7 @@ public class HeroDaoDB implements HeroDao {
         superpowerDao.addSuperpower(power);
     }
 
+    //Maps Hero entries in the database to an object
     public static final class HeroMapper implements RowMapper<Hero> {
 
         @Override

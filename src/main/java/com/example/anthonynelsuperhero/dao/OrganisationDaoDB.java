@@ -17,6 +17,7 @@ public class OrganisationDaoDB implements OrganisationDao{
     @Autowired
     JdbcTemplate jdbc;
 
+    //Adds an organisation to the organisation table
     @Override
     public void addOrganisation(Organisation organisation) {
         final String INSERT_ORGANISATION = "INSERT INTO Organisation(OrganisationID, Name, Description, Postcode) "
@@ -28,12 +29,14 @@ public class OrganisationDaoDB implements OrganisationDao{
                 organisation.getPostcode());
     }
 
+    //deletes an organisation from the organisation table in the DB
     @Override
     public void deleteOrganisation(int id) {
         final String DELETE_HERO = "DELETE FROM Organisation WHERE OrganisationID = ?";
         jdbc.update(DELETE_HERO, id);
     }
 
+    //updates an organisation in the DB
     @Override
     public void updateOrganisation(Organisation organisation) {
         final String UPDATE_ORGANISATION = "UPDATE Organisation SET Name = ?, Description = ? "
@@ -45,6 +48,7 @@ public class OrganisationDaoDB implements OrganisationDao{
                 organisation.getId());
     }
 
+    //returns all the organisation in the db as a list
     @Override
     public List<Organisation> getOrganisations() {
         final String SELECT_ALL_ORGANISATIONS = "SELECT * FROM Organisation";
@@ -52,7 +56,7 @@ public class OrganisationDaoDB implements OrganisationDao{
         return organisations;
     }
 
-
+    //Gets all the heroes that are in the specified organisation and returns as a list
     @Override
     public List<Hero> getHeroesOfOrganisation(int organisationId) {
         final String SELECT_ALL_HEROES = "SELECT * FROM OrganisationHero " +
@@ -61,6 +65,7 @@ public class OrganisationDaoDB implements OrganisationDao{
         return heroes;
     }
 
+    //Maps the organisation entries in the DB to organisation objects
     public static final class OrganisationMapper implements RowMapper<Organisation> {
         @Override
         public Organisation mapRow(ResultSet rs, int index) throws SQLException {

@@ -17,6 +17,7 @@ public class SuperPowerDaoDB implements SuperpowerDao{
     @Autowired
     JdbcTemplate jdbc;
 
+    //Adds a new superpower into the superpower table
     @Override
     public void addSuperpower(Superpower superpower) {
         final String INSERT_SUPERPOWER = "INSERT INTO Superpower(Name, Description) "
@@ -26,12 +27,14 @@ public class SuperPowerDaoDB implements SuperpowerDao{
                 superpower.getDescription());
     }
 
+    //Deletes an existing superpower from the superpower table
     @Override
     public void deleteSuperpower(String powerName) {
         final String DELETE_SUPERPOWER = "DELETE FROM Superpower WHERE Name = ?";
         jdbc.update(DELETE_SUPERPOWER, powerName);
     }
 
+    //Updates an existing superpower in the superpower table
     @Override
     public void updateSuperpower(Superpower superpower) {
         final String UPDATE_SUPERPOWER = "UPDATE Superpower SET Description = ? "
@@ -41,6 +44,7 @@ public class SuperPowerDaoDB implements SuperpowerDao{
                 superpower.getName());
     }
 
+    //Gets all of the superpowers in the superpower table and returns them as a list
     @Override
     public List<Superpower> getSuperpowers() {
         final String SELECT_ALL_SUPERPOWERS = "SELECT * FROM Superpower";
@@ -48,6 +52,7 @@ public class SuperPowerDaoDB implements SuperpowerDao{
         return superpowers;
     }
 
+    //Maps a superpower entry in the database to a superpower object and returns it
     public static final class SuperpowerMapper implements RowMapper<Superpower> {
         @Override
         public Superpower mapRow(ResultSet rs, int index) throws SQLException {

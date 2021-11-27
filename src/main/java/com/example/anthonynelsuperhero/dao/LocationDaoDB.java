@@ -16,6 +16,7 @@ public class LocationDaoDB implements LocationDao{
     @Autowired
     JdbcTemplate jdbc;
 
+    //Adds a new location to the location table in the DB
     @Override
     public void addLocation(Location location) {
         final String INSERT_LOCATION = "INSERT INTO Location(Name, Description, Postcode, Latitude, Longitude) "
@@ -28,6 +29,7 @@ public class LocationDaoDB implements LocationDao{
                 location.getLongitude());
     }
 
+    //Deletes a location from the DB
     @Override
     public void deleteLocation(float latitude, float longitude) {
         final String DELETE_HERO = "DELETE FROM Location WHERE Latitude = "+(double)latitude+" AND Longitude = "+(double)longitude;
@@ -35,6 +37,7 @@ public class LocationDaoDB implements LocationDao{
         jdbc.update(DELETE_HERO);
     }
 
+    //Updates a location in the DB
     @Override
     public void updateLocation(Location location) {
         final String UPDATE_LOCATION = "UPDATE Location SET Name = ?, Description = ? "
@@ -44,6 +47,7 @@ public class LocationDaoDB implements LocationDao{
                 location.getDescription());
     }
 
+    //Gets all the location in the location table in the DB
     @Override
     public List<Location> getLocations() {
         final String SELECT_ALL_LOCATIONS = "SELECT * FROM Location";
@@ -51,7 +55,7 @@ public class LocationDaoDB implements LocationDao{
         return locations;
     }
 
-
+    //Maps a row from the location table to a location object
     public static final class LocationMapper implements RowMapper<Location> {
 
         @Override

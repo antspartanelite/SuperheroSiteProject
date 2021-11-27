@@ -1,7 +1,6 @@
 package com.example.anthonynelsuperhero;
 
 import com.example.anthonynelsuperhero.dao.LocationDao;
-import com.example.anthonynelsuperhero.dto.Hero;
 import com.example.anthonynelsuperhero.dto.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

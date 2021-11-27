@@ -47,6 +47,7 @@ public class HeroDaoDBTests {
         }
     }
 
+    //Tests by adding and getting by adding 3 tables to the table then getting them
     @Test
     public void addAndGetHeroesTest(){
         Hero heroToAdd = new Hero();
@@ -80,6 +81,7 @@ public class HeroDaoDBTests {
         assertEquals("Flight", heroes.get(2).getSuperpower());
     }
 
+    //Tests deleting hero from table by adding deleting then getting, and seeing if the deleted one is missing
     @Test
     public void deleteHeroTest(){
         Hero heroToAdd = new Hero();
@@ -107,6 +109,7 @@ public class HeroDaoDBTests {
         assertEquals("Flight", heroes.get(1).getSuperpower());
     }
 
+    //Tests updating by updating a value then getting it and seeing if it has changed
     @Test
     public void updateHeroTest() {
         Hero heroToAdd = new Hero();
