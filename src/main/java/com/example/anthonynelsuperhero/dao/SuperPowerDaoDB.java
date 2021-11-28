@@ -1,6 +1,5 @@
 package com.example.anthonynelsuperhero.dao;
 
-import com.example.anthonynelsuperhero.dto.Sighting;
 import com.example.anthonynelsuperhero.dto.Superpower;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
