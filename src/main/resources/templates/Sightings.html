@@ -47,6 +47,8 @@
                     <th>Date</th>
                     <th>Edit</th>
                     <th>Delete</th>
+                    <th>Location</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -58,6 +60,7 @@
                     <td th:text="${sighting.date}">SightingDate</td>
                     <td><a href="#" th:href="@{/editSighting(id=${sighting.sightingId})}">Edit</a></td>
                     <td><a href="#" th:href="@{/deleteSighting(id=${sighting.sightingId})}">Delete</a></td>
+                    <td><iframe th:src="@{https://maps.google.com/maps?q={latitude}, {longitude}&z=15&output=embed(latitude=${sighting.latitude},longitude=${sighting.longitude})}" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe></td>
                 </tr>
                 </tbody>
             </table>
