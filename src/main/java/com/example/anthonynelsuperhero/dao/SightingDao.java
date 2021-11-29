@@ -8,11 +8,12 @@ import java.util.List;
 
 public interface SightingDao {
     public void addSighting (Sighting sighting);
-    public void deleteSighting(Sighting sighting);
+    public void deleteSighting(int id);
     public void updateSighting(Sighting sighting);
     public List<Sighting> getSightings();
 
     public List<Hero> getHeroesByLocationSighted(float latitude, float longitude);
     public List<Location> getLocationsHeroHasBeenSighted(int heroId);
     public List<Sighting> getSightingsOnDate(String date);
+    public List<Sighting> getRecentSightings();
 }

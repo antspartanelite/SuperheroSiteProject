@@ -36,51 +36,37 @@
         </div>
     </div>
     <div class="row m-4 border border-dark">
-        <div class="col text-center m-3">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Date</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="superpower : ${superpowers}">
-                    <td th:text="${superpower.name}">Superpower Name</td>
-                    <td th:text="${superpower.description}">Superpower Description</td>
-                    <td><a href="#" th:href="@{/editSuperpower(name=${superpower.name})}">Edit</a></td>
-                    <td><a href="#" th:href="@{/deleteSuperpower(name=${superpower.name})}">Delete</a></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="row m-4 border border-dark">
         <div class="col-3 text-center m-3">
-            <span class="h3">Add Superpower</span>
+            <span class="h3">Edit Organisation</span>
         </div>
         <div class="col-7 text-center m-3">
-            <form action="addSuperpower" method="POST">
+            <form action="editOrganisation" method="POST">
                 <div class="form-group row">
                     <label for="name" class="col-3 col-form-label">
                         Name</label>
                     <div class="col-9">
-                        <input type="text" name="name"
-                               id="name" class="form-control"/>
+                        <input type="text" name="name" id="name"
+                               class="form-control" th:value="${organisation.name}"/>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="description" class="col-3 col-form-label">
                         Description</label>
                     <div class="col-9">
-                        <input type="text" name="description"
-                               id="description" class="form-control"/>
+                        <input type="text" name="description" id="description"
+                               class="form-control"  th:value="${organisation.description}"/>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Superpower</button>
+                <div class="form-group row">
+                    <label for="postcode" class="col-3 col-form-label">
+                        Postcode</label>
+                    <div class="col-9">
+                        <input type="text" name="postcode" id="postcode"
+                               class="form-control"  th:value="${organisation.postcode}"/>
+                    </div>
+                </div>
+                <input type="hidden" name="id" th:value="${organisation.id}"/>
+                <button type="submit" class="btn btn-primary">Update Organisation</button>
             </form>
         </div>
     </div>

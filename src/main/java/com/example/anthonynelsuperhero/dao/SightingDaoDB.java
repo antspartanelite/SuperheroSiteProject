@@ -32,10 +32,9 @@ public class SightingDaoDB implements SightingDao{
 
     //Deletes a sighting from the DB
     @Override
-    public void deleteSighting(Sighting sighting) {
+    public void deleteSighting(int id) {
         final String DELETE_HEROSIGHTING = "DELETE FROM HeroSighting WHERE SightingID = ?";
-        jdbc.update(DELETE_HEROSIGHTING,
-                sighting.getSightingId());
+        jdbc.update(DELETE_HEROSIGHTING, id);
     }
 
     //Updates a sighting currently in the db
@@ -84,6 +83,13 @@ public class SightingDaoDB implements SightingDao{
                 "WHERE SightingDate = ?";
         List<Sighting> sightings = jdbc.query(SELECT_ALL_SIGHTINGS, new SightingMapper(), date);
         return sightings;
+    }
+
+    @Override
+    public List<Sighting> getRecentSightings(){
+        final String SELECT_RECENT_SIGHTINGS = "SELECT * FROM HeroSighting " +
+                "ORDER BY SightingDate DESC, SightingID DESC LIMIT 10";
+        return jdbc.query(SELECT_RECENT_SIGHTINGS, new SightingMapper());
     }
 
     //maps an sighting entry from the db into a sighting object

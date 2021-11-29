@@ -36,51 +36,45 @@
         </div>
     </div>
     <div class="row m-4 border border-dark">
-        <div class="col text-center m-3">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Date</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="superpower : ${superpowers}">
-                    <td th:text="${superpower.name}">Superpower Name</td>
-                    <td th:text="${superpower.description}">Superpower Description</td>
-                    <td><a href="#" th:href="@{/editSuperpower(name=${superpower.name})}">Edit</a></td>
-                    <td><a href="#" th:href="@{/deleteSuperpower(name=${superpower.name})}">Delete</a></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="row m-4 border border-dark">
         <div class="col-3 text-center m-3">
-            <span class="h3">Add Superpower</span>
+            <span class="h3">Edit Sighting</span>
         </div>
         <div class="col-7 text-center m-3">
-            <form action="addSuperpower" method="POST">
+            <form action="editSighting" method="POST">
                 <div class="form-group row">
-                    <label for="name" class="col-3 col-form-label">
-                        Name</label>
+                    <label for="latitude" class="col-3 col-form-label">
+                        Latitude(Must be from an existing location)</label>
                     <div class="col-9">
-                        <input type="text" name="name"
-                               id="name" class="form-control"/>
+                        <input type="text" name="latitude" id="latitude"
+                               class="form-control" th:value="${sighting.latitude}"/>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="description" class="col-3 col-form-label">
-                        Description</label>
+                    <label for="longitude" class="col-3 col-form-label">
+                        Longitude(Must be from an existing location)</label>
                     <div class="col-9">
-                        <input type="text" name="description"
-                               id="description" class="form-control"/>
+                        <input type="text" name="longitude" id="longitude"
+                               class="form-control"  th:value="${sighting.longitude}"/>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Superpower</button>
+                <div class="form-group row">
+                    <label for="heroId" class="col-3 col-form-label">
+                        HeroID</label>
+                    <div class="col-9">
+                        <input type="text" name="heroId" id="heroId"
+                               class="form-control"  th:value="${sighting.heroId}"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="date" class="col-3 col-form-label">
+                        HeroID</label>
+                    <div class="col-9">
+                        <input type="text" name="date" id="date"
+                               class="form-control"  th:value="${sighting.date}"/>
+                    </div>
+                </div>
+                <input type="hidden" name="sightingId" th:value="${sighting.sightingId}"/>
+                <button type="submit" class="btn btn-primary">Update Sighting</button>
             </form>
         </div>
     </div>

@@ -34,7 +34,7 @@ public class SightingDaoDBTests {
     public void setUp() {
         List<Sighting> sightings = sightingDao.getSightings();
         for (Sighting sighting : sightings) {
-            sightingDao.deleteSighting(sighting);
+            sightingDao.deleteSighting(sighting.getSightingId());
         }
         List<Location> locations = locationDao.getLocations();
         for (Location location : locations) {
@@ -170,7 +170,7 @@ public class SightingDaoDBTests {
         sightingDao.addSighting(sighting);
 
         List<Sighting> sightings = sightingDao.getSightings();
-        sightingDao.deleteSighting(sightings.get(0));
+        sightingDao.deleteSighting(sightings.get(0).getSightingId());
 
         assertEquals(sightings.get(1).getLatitude(), sightingDao.getSightings().get(0).getLatitude());
         assertEquals(sightings.get(1).getLongitude(), sightingDao.getSightings().get(0).getLongitude());
